@@ -1,0 +1,22 @@
+name: Cancel workflow
+
+on:
+  workflow_call:
+
+jobs:
+
+  cancel-workflow:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Cancel workflow run
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.actions.cancelWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: context.runId
+             })
