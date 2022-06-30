@@ -1,0 +1,28 @@
+name: Lint
+on:
+  workflow_call:
+    inputs:
+      default-branch:
+        required: true
+        type: string
+    secrets:
+      github-token:
+        required: true
+jobs:
+
+  lint-commits:
+
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Lint Code Base
+        uses: github/super-linter/slim@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          GITHUB_TOKEN: ${{ secrets.github-token }}
+          DEFAULT_BRANCH: ${{ inputs.default-branch }}
